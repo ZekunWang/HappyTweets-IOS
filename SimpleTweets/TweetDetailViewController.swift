@@ -17,7 +17,7 @@ class TweetDetailViewController: UIViewController {
     
     let composeViewController = "ComposeViewController"
     
-    @IBOutlet var retweetMessageImageView: UIImageView!
+    @IBOutlet var retweetMessageView: UIView!
     @IBOutlet var retweetMessageLabel: UILabel!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
@@ -62,12 +62,9 @@ class TweetDetailViewController: UIViewController {
             targetTweet = retweetedStatus
             
             retweetMessageLabel.text = "\(self.tweet.user.name) Retweeted"
-            retweetMessageImageView.isHidden = false
-            retweetMessageLabel.isHidden = false
+            retweetMessageView.isHidden = false
         } else {
-            print("retweetMessageImageView is \(retweetMessageImageView)")
-            retweetMessageImageView.isHidden = true
-            retweetMessageLabel.isHidden = true
+            retweetMessageView.isHidden = true
         }
         
         profileImageView.setImageWith(URL(string: targetTweet.user.profileUrl)!)
@@ -77,6 +74,10 @@ class TweetDetailViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yy, HH:mm"
         timeLabel.text = formatter.string(from: targetTweet.timestamp as! Date)
+        
+        if let medium = targetTweet.medium {
+            // TODO - handel media
+        }
         
         showActionViews()
     }

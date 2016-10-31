@@ -30,6 +30,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet var favoriteButton: UIButton!
     @IBOutlet var favoriteCountLabel: UILabel!
     @IBOutlet var retweetCountLabel: UILabel!
+    @IBOutlet var retweetMessageView: UIView!
     
     var tweetsViewController: TweetsViewController!
     var delegate: TweetCellDelegate!
@@ -46,11 +47,9 @@ class TweetCell: UITableViewCell {
                 targetTweet = retweetedStatus
                 
                 retweetMessageLabel.text = "\(self.tweet.user.name) Retweeted"
-                retweetMessageImageView.isHidden = false
-                retweetMessageLabel.isHidden = false
+                retweetMessageView.isHidden = false
             } else {
-                retweetMessageImageView.isHidden = true
-                retweetMessageLabel.isHidden = true
+                retweetMessageView.isHidden = true
             }
             
             profileImageView.setImageWith(URL(string: targetTweet.user.profileUrl)!)

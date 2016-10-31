@@ -29,7 +29,8 @@ The following **additional** features are implemented:
 - [x] Add fake UI elements to make the app more like the TWitter app
 - [x] Customize launch page and add app icon
 - [x] User can retweet, favorite, and reply directly on table cell
-- [x] Add/remove compose hint to indicate reply or new tweet
+- [x] Add/remove compose hint with stack view to indicate reply or new tweet
+- [x] Add/remove retweet hint with stack view to indicate retweeted or original tweet
 - [x] Show time difference in table cell
 - [x] Format retweet count and favorite count in table cell and tweet detail page
 - [x] Use Realm to store data locally

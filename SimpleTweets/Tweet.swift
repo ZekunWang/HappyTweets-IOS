@@ -20,6 +20,8 @@ class Tweet: Object {
     static let USER = "user"
     static let RETWEETED_STATUS = "retweeted_status"
     static let IN_REPLY_TO_STATUS_ID = "in_reply_to_status_id_str"
+    static let EXTENDED_ENTITIES = "extended_entities"
+    static let MEDIA = "media"
     
     static let isUpdated: Bool = false
     
@@ -33,6 +35,7 @@ class Tweet: Object {
     dynamic var user: User!
     dynamic var timestamp: NSDate?
     dynamic var retweetedStatus: Tweet?
+    dynamic var medium: Medium!
     
     // Remaining useful keys
     /*
@@ -83,6 +86,15 @@ class Tweet: Object {
         // Get user info
         let userDictionary = dictionary[Tweet.USER] as! NSDictionary
         user = User.findOrCreate(dictionary: userDictionary)
+        
+        // Get media info
+        if let extendedEntities = dictionary[Tweet.EXTENDED_ENTITIES] {
+            let entitiesDictionary = extendedEntities as! NSDictionary
+            let media = entitiesDictionary[Tweet.MEDIA] as! [NSDictionary]
+            if media.count > 0 {
+                self.medium = Medium.findOrCreate(tweet: self, dictionary: media[0])
+            }
+        }
         
         // Get date info
         let timeStampString = dictionary[Tweet.CREATED_AT] as? String
