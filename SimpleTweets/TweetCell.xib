@@ -52,11 +52,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXH-IX-E8R">
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="1hr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELE-Lu-RM0">
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -107,10 +102,15 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXH-IX-E8R">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5DW-kV-gSm" firstAttribute="leading" secondItem="HEO-7B-gR0" secondAttribute="leading" id="0J8-2D-Oth"/>
-                    <constraint firstItem="5DW-kV-gSm" firstAttribute="top" secondItem="Zsq-g9-Csa" secondAttribute="bottom" constant="42" id="68s-GZ-BBs"/>
+                    <constraint firstItem="5DW-kV-gSm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Zsq-g9-Csa" secondAttribute="bottom" constant="12" id="68s-GZ-BBs"/>
                     <constraint firstItem="vsG-Lk-K01" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="6D4-6o-Wjq"/>
                     <constraint firstItem="Zsq-g9-Csa" firstAttribute="top" secondItem="HEO-7B-gR0" secondAttribute="bottom" constant="4" id="6LB-7x-90W"/>
                     <constraint firstItem="mbs-HH-Fwd" firstAttribute="leading" secondItem="EBa-cl-C5O" secondAttribute="trailing" constant="4" id="7Rl-MY-DcW"/>
