@@ -26,7 +26,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] Customize navigation bar
-- [x] Add fake UI elements to make the app more like the TWitter app
+- [x] Add fake UI elements to make the app more like the Twitter app
 - [x] Customize launch page and add app icon
 - [x] User can retweet, favorite, and reply directly on table cell
 - [x] Add/remove compose hint with stack view to indicate reply or new tweet
@@ -34,16 +34,17 @@ The following **additional** features are implemented:
 - [x] Show time difference in table cell
 - [x] Format retweet count and favorite count in table cell and tweet detail page
 - [x] Use Realm to store data locally
+- [x] Show image in tweet cells and detail page, need to make detail page scrollable
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. Different ways of assing data
+1. Different ways of passing data
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](SimpleTweets_v1.gif)
+![Video Walkthrough](SimpleTweets_v2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -51,7 +52,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 Describe any challenges encountered while building the app.
 1. Fix login issues
-2. Passing data between view controllers
+2. Pass data between view controllers
 
 ## License
 

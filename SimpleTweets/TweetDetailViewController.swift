@@ -29,7 +29,11 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet var replyButton: UIButton!
     @IBOutlet var retweetButton: UIButton!
     @IBOutlet var favoriteButton: UIButton!
+    @IBOutlet var mediaView: UIView!
+    @IBOutlet var mediaImageView: UIImageView!
     
+    @IBOutlet var mediaImageWidth: NSLayoutConstraint!
+    @IBOutlet var mediaImageHeight: NSLayoutConstraint!
     var targetTweet: Tweet!
     var tweet: Tweet!
     
@@ -45,6 +49,8 @@ class TweetDetailViewController: UIViewController {
         
         print("tweet detail viewDidLoad")
         profileImageView.layer.cornerRadius = 10
+        profileImageView.clipsToBounds = true
+        mediaImageView.layer.cornerRadius = 10
         profileImageView.clipsToBounds = true
         
         setupNavigationBar()
@@ -76,7 +82,11 @@ class TweetDetailViewController: UIViewController {
         timeLabel.text = formatter.string(from: targetTweet.timestamp as! Date)
         
         if let medium = targetTweet.medium {
-            // TODO - handel media
+            mediaImageHeight.constant = (mediaImageWidth.constant) / CGFloat(medium.ratio)
+            mediaImageView.setImageWith(URL(string: medium.mediaUrl)!)
+            mediaView.isHidden = false
+        } else {
+            mediaView.isHidden = true
         }
         
         showActionViews()

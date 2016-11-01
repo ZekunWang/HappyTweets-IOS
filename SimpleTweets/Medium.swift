@@ -17,7 +17,7 @@ class Medium: Object {
 //    medium.tweet = tweet;
     static let ID_STR = "id_str"
     static let TYPE = "type"
-    static let MEDIA_URL = "media_url"
+    static let MEDIA_URL_HTTPS = "media_url_https"
     static let URL = "url"
     static let VIDEO_INFO = "video_info"
     static let VARIANTS = "variants"
@@ -25,13 +25,14 @@ class Medium: Object {
     
     dynamic var midStr: String = ""
     dynamic var type: String!
-    dynamic var mediaUrl: String!
+    dynamic var mediaUrl: String = ""
     dynamic var url: String!
     dynamic var tIdStr: String!
     dynamic var video: String!
+    dynamic var ratio: Float = 1.778
     
     var urlSmall: String! {
-        return self.url != nil ? self.url + ":small" : nil
+        return self.mediaUrl != "" ? self.mediaUrl + ":small" : nil
     }
     
     override static func primaryKey() -> String? {
@@ -76,11 +77,16 @@ class Medium: Object {
     
     func fromUserDictionary(tweet: Tweet, dictionary: NSDictionary) {
         self.midStr = dictionary[Medium.ID_STR] as! String
-        self.mediaUrl = dictionary[Medium.MEDIA_URL] as! String
+        self.mediaUrl = dictionary[Medium.MEDIA_URL_HTTPS] as! String
         self.url = dictionary[Medium.URL] as! String
         print("picture: \(self.url)")
         self.type = dictionary[Medium.TYPE] as! String
         self.tIdStr = tweet.tidStr
+        
+        if let sizes = dictionary["sizes"] {
+            let size = (sizes as! NSDictionary)["medium"] as! NSDictionary
+            self.ratio = (size["w"] as! Float) / (size["h"] as! Float)
+        }
         
         if let vedioInfo = dictionary[Medium.VIDEO_INFO] {
             if let variants = (vedioInfo as! NSDictionary)[Medium.VARIANTS] {

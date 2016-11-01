@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet var iconVerticalCenter: NSLayoutConstraint!
     
+    var hasPlayed: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,12 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if hasPlayed {
+            self.logoImageView.center = CGPoint(x: self.logoImageView.center.x, y: self.logoImageView.center.y - 100)
+            self.loginButton.alpha = 1
+            return
+        }
+        
         UIView.animate(withDuration: 1, animations: { () -> Void in
             self.logoImageView.center = CGPoint(x: self.logoImageView.center.x, y: self.logoImageView.center.y - 100)
         })
@@ -36,6 +44,7 @@ class LoginViewController: UIViewController {
         UIView.animate(withDuration: 2, animations: { () -> Void in
             self.loginButton.alpha = 1
         })
+        hasPlayed = true
     }
 
     override func didReceiveMemoryWarning() {

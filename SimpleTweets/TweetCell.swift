@@ -31,6 +31,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet var favoriteCountLabel: UILabel!
     @IBOutlet var retweetCountLabel: UILabel!
     @IBOutlet var retweetMessageView: UIView!
+    @IBOutlet var mediaView: UIView!
+    @IBOutlet var mediaImageView: UIImageView!
     
     var tweetsViewController: TweetsViewController!
     var delegate: TweetCellDelegate!
@@ -50,6 +52,13 @@ class TweetCell: UITableViewCell {
                 retweetMessageView.isHidden = false
             } else {
                 retweetMessageView.isHidden = true
+            }
+            
+            if let medium = targetTweet.medium {
+                mediaImageView.setImageWith(URL(string: medium.mediaUrl)!)
+                mediaView.isHidden = false
+            } else {
+                mediaView.isHidden = true
             }
             
             profileImageView.setImageWith(URL(string: targetTweet.user.profileUrl)!)
@@ -143,6 +152,8 @@ class TweetCell: UITableViewCell {
         // Initialization code
         profileImageView.layer.cornerRadius = 10
         profileImageView.clipsToBounds = true
+        mediaImageView.layer.cornerRadius = 10
+        mediaImageView.clipsToBounds = true
         
         let retweetImage = UIImage(named: "retweet")?.withRenderingMode(.alwaysTemplate)
         let favoriteImage = UIImage(named: "heart")?.withRenderingMode(.alwaysTemplate)
