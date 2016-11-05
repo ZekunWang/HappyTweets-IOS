@@ -26,7 +26,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var tweetButtonBottomMargin: NSLayoutConstraint!
     
-    var delegate: ComposeViewControllerDelegate!
+    //var delegate: ComposeViewControllerDelegate!
     
     var user: User!
     var targetTweet: Tweet!
@@ -122,7 +122,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         }
         
         twitterClient?.composeTweet(tweet: newTweet, success: { (tweet: Tweet) in
-            self.delegate?.onComposeTweetSucceeded(tweet: tweet)
+            //self.delegate?.onComposeTweetSucceeded(tweet: tweet)
             self.onCancel(self.tweetButton)
         }, failure: { (error: Error) in
             print(error.localizedDescription)

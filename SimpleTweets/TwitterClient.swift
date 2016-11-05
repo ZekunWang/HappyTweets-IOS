@@ -48,6 +48,40 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func mentionsTimeline(refreshing: Bool, sinceId: Int64?, maxId: Int64?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        var parameters = [String : AnyObject]()
+        parameters["count"] = 20 as AnyObject
+        
+        if let sinceId = sinceId {
+            parameters["since_id"] = sinceId as AnyObject
+        }
+        
+        if let maxId = maxId {
+            parameters["max_id"] = maxId as AnyObject
+        }
+        
+        get(AppConstants.mentionsTimeline, parameters: parameters, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            if refreshing {
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.deleteAll()
+                }
+                self.curretAccount(success: { (user: User) in
+                }) { (error: Error) in
+                }
+            }
+            
+            let dictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            
+            success(tweets)
+            
+            }, failure: { (task: URLSessionDataTask?, error: Error) in
+                failure(error)
+        })
+    }
+    
     func composeTweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
         var parameters = [String : AnyObject]()
         

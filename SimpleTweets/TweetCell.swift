@@ -142,7 +142,7 @@ class TweetCell: UITableViewCell {
     func onComposeTouchUp() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let composeViewController = storyboard.instantiateViewController(withIdentifier: self.composeViewController) as! ComposeViewController
-        composeViewController.delegate = tweetsViewController
+        //composeViewController.delegate = tweetsViewController
         composeViewController.repliedToTweet = tweet
         tweetsViewController.present(composeViewController, animated: true, completion: nil)
     }

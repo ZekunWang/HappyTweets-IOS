@@ -41,7 +41,7 @@ class TweetDetailViewController: UIViewController {
     var searchButton: UIButton!
     
     var delegate: TweetDetailViewControllerDelegate!
-    var tweetsViewController: TweetsViewController!
+    //var timelineViewController: TweetsViewController!
     var indexPath: IndexPath!
     
     override func viewDidLoad() {
@@ -140,7 +140,7 @@ class TweetDetailViewController: UIViewController {
     func onComposeTouchUp() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let composeViewController = storyboard.instantiateViewController(withIdentifier: self.composeViewController) as! ComposeViewController
-        composeViewController.delegate = tweetsViewController
+        //composeViewController.delegate = self
         composeViewController.repliedToTweet = tweet
         self.present(composeViewController, animated: true, completion: nil)
     }
