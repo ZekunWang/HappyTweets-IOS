@@ -12,11 +12,12 @@ import RealmSwift
 
 protocol TweetCellDelegate {
     func onTweetUpdated(tweet: Tweet, indexPath: IndexPath)
+    func onProfileImageSelected(uidStr: String)
 }
 
 class TweetCell: UITableViewCell {
     
-    let composeViewController = "ComposeViewController"
+    let composeViewControllerString = "ComposeViewController"
     
     @IBOutlet var retweetMessageImageView: UIImageView!
     @IBOutlet var retweetMessageLabel: UILabel!
@@ -35,6 +36,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet var mediaImageView: UIImageView!
     
     var tweetsViewController: TweetsViewController!
+    var profileViewController: ProfileViewController!
     var delegate: TweetCellDelegate!
     var indexPath: IndexPath!
     var targetTweet: Tweet!
@@ -48,7 +50,11 @@ class TweetCell: UITableViewCell {
             if let retweetedStatus = self.tweet.retweetedStatus {
                 targetTweet = retweetedStatus
                 
-                retweetMessageLabel.text = "\(self.tweet.user.name) Retweeted"
+                if tweet.user.uidStr == User.getCurrentUserId() {
+                    retweetMessageLabel.text = "You Retweeted"
+                } else {
+                    retweetMessageLabel.text = "\(self.tweet.user.name) Retweeted"
+                }
                 retweetMessageView.isHidden = false
             } else {
                 retweetMessageView.isHidden = true
@@ -141,10 +147,14 @@ class TweetCell: UITableViewCell {
     
     func onComposeTouchUp() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let composeViewController = storyboard.instantiateViewController(withIdentifier: self.composeViewController) as! ComposeViewController
+        let composeViewController = storyboard.instantiateViewController(withIdentifier: self.composeViewControllerString) as! ComposeViewController
         //composeViewController.delegate = tweetsViewController
-        composeViewController.repliedToTweet = tweet
+        composeViewController.repliedToTweet = targetTweet
         tweetsViewController.present(composeViewController, animated: true, completion: nil)
+    }
+    
+    func onProfileImageTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.onProfileImageSelected(uidStr: targetTweet.user.uidStr)
     }
     
     override func awakeFromNib() {
@@ -159,6 +169,10 @@ class TweetCell: UITableViewCell {
         let favoriteImage = UIImage(named: "heart")?.withRenderingMode(.alwaysTemplate)
         retweetButton.setImage(retweetImage, for: .normal)
         favoriteButton.setImage(favoriteImage, for: .normal)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onProfileImageTapped(_:)))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

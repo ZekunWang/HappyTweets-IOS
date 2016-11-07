@@ -1,29 +1,26 @@
 //
-//  MenuItemCell.swift
+//  MediumCell.swift
 //  SimpleTweets
 //
-//  Created by Zekun Wang on 11/5/16.
+//  Created by Zekun Wang on 11/6/16.
 //  Copyright © 2016 Zekun Wang. All rights reserved.
 //
 
 import UIKit
 
-class MenuItemCell: UITableViewCell {
+class MediumCell: UITableViewCell {
 
-    @IBOutlet var iconImageView: UIImageView!
-    @IBOutlet var iconLabel: UILabel!
+    @IBOutlet var mediumImageView: UIImageView!
     
-    var menuItem: MenuItem! {
+    var tweet: Tweet! {
         didSet {
-            iconImageView.image = menuItem.icon.withRenderingMode(.alwaysTemplate)
-            iconLabel.text = menuItem.label
+            mediumImageView.setImageWith(URL(string: tweet.medium.mediaUrl)!, placeholderImage: #imageLiteral(resourceName: "default-placeholder"))
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        iconImageView.tintColor = AppConstants.tweet_dark_gray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

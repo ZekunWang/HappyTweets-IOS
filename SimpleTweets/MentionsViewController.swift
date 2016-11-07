@@ -1,18 +1,19 @@
 //
-//  HomeViewController.swift
+//  MentionsViewController.swift
 //  SimpleTweets
 //
-//  Created by Zekun Wang on 11/4/16.
+//  Created by Zekun Wang on 11/5/16.
 //  Copyright © 2016 Zekun Wang. All rights reserved.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController, ComposeViewControllerDelegate, TweetsViewControllerDelegate,TweetDetailViewControllerDelegate {
+class MentionsViewController: UIViewController, ComposeViewControllerDelegate, TweetsViewControllerDelegate,TweetDetailViewControllerDelegate {
     
     let composeViewControllerString = "ComposeViewController"
     let tweetDetailViewControllerString = "TweetDetailViewController"
     let tweetsViewControllerString = "TweetsViewController"
+    let profileViewControllerString = "ProfileViewController"
     
     var composeButton: UIButton!
     var searchButton: UIButton!
@@ -38,7 +39,7 @@ class HomeViewController: UIViewController, ComposeViewControllerDelegate, Tweet
         //tweetsViewController.timelineViewController = self
         tweetsViewController.delegate = self
         tweetsViewController.addPullToRefresh()
-        tweetsViewController.timelineType = .home
+        tweetsViewController.timelineType = .mentions
         // Do any additional setup after loading the view.
     }
     
@@ -69,12 +70,12 @@ class HomeViewController: UIViewController, ComposeViewControllerDelegate, Tweet
         searchButton.setImage(UIImage(named: "search"), for: .normal)
         let searchItem = UIBarButtonItem(customView: searchButton)
         
-//        hamburgerButton = UIButton(type: .custom)
-//        hamburgerButton.contentMode = UIViewContentMode.scaleAspectFit
-//        hamburgerButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-//        hamburgerButton.setImage(UIImage(named: "hamburger"), for: .normal)
-//        hamburgerButton.addTarget(self, action: #selector(onHamburgerTouchUp), for: .touchUpInside)
-//        let hamburgerItem = UIBarButtonItem(customView: hamburgerButton)
+        //        hamburgerButton = UIButton(type: .custom)
+        //        hamburgerButton.contentMode = UIViewContentMode.scaleAspectFit
+        //        hamburgerButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        //        hamburgerButton.setImage(UIImage(named: "hamburger"), for: .normal)
+        //        hamburgerButton.addTarget(self, action: #selector(onHamburgerTouchUp), for: .touchUpInside)
+        //        let hamburgerItem = UIBarButtonItem(customView: hamburgerButton)
         
         let spaceItem = UIBarButtonItem(customView: UIButton(frame: CGRect(x: 0, y: 0, width: 2, height: 30)))
         let wideSpaceItem = UIBarButtonItem(customView: UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 30)))
@@ -114,11 +115,6 @@ class HomeViewController: UIViewController, ComposeViewControllerDelegate, Tweet
         //tweetDetailViewController.timelineViewController = self
         tweetDetailViewController.delegate = self
         tweetDetailViewController.indexPath = indexPath
-        
-        print("  tweets count: \(tweetsViewController.tweets?.count)")
-        print("selected index: \(indexPath.row)")
-        print("selected tweet: \(tweetsViewController.tweets[indexPath.row])")
-        
         tweetDetailViewController.tweet = tweetsViewController.tweets[indexPath.row]
         
         self.navigationController?.pushViewController(tweetDetailViewController, animated: true)
@@ -128,15 +124,15 @@ class HomeViewController: UIViewController, ComposeViewControllerDelegate, Tweet
         TwitterClient.sharedInstance?.logout()
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

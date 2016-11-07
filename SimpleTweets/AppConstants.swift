@@ -16,6 +16,7 @@ class AppConstants {
     static let verifyCredentials = "1.1/account/verify_credentials.json"
     static let homeTimeline = "1.1/statuses/home_timeline.json"
     static let userTimeline = "1.1/statuses/user_timeline.json"
+    static let favoritesTimeline = "1.1/favorites/list.json"
     static let mentionsTimeline = "1.1/statuses/mentions_timeline.json"
     static let composeTweet = "1.1/statuses/update.json"
     static let setFavorite = "1.1/favorites/create.json"

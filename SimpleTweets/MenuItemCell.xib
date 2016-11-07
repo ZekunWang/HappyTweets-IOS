@@ -12,29 +12,28 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="62"/>
+                <frame key="frameInset" width="320" height="61"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oH3-do-Ivb">
-                        <constraints>
-                            <constraint firstAttribute="width" constant="30" id="U5a-aa-i4L"/>
-                            <constraint firstAttribute="height" constant="30" id="n19-lW-0HN"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPZ-Ai-j78">
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oH3-do-Ivb">
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="Gt1-vC-zpm"/>
+                            <constraint firstAttribute="width" constant="25" id="rcH-IX-oHa"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="leading" secondItem="oH3-do-Ivb" secondAttribute="trailing" constant="16" id="1IS-MX-H15"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oH3-do-Ivb" secondAttribute="bottom" constant="16" id="4EY-Zz-2B8"/>
-                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="centerY" secondItem="oH3-do-Ivb" secondAttribute="centerY" id="7eQ-Kx-Ihp"/>
-                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="leading" secondItem="oH3-do-Ivb" secondAttribute="trailing" constant="16" id="PpR-tw-M4n"/>
-                    <constraint firstItem="oH3-do-Ivb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="bn8-zc-oTQ"/>
-                    <constraint firstItem="oH3-do-Ivb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="kJg-Ds-aMj"/>
-                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="leading" secondItem="oH3-do-Ivb" secondAttribute="trailing" constant="16" id="tEG-4D-vHI"/>
+                    <constraint firstItem="oH3-do-Ivb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="1HW-EC-Vcq"/>
+                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="centerY" secondItem="oH3-do-Ivb" secondAttribute="centerY" id="QKm-Pg-ZjV"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oH3-do-Ivb" secondAttribute="bottom" constant="16" id="UFo-CN-jvY"/>
+                    <constraint firstItem="JPZ-Ai-j78" firstAttribute="leading" secondItem="oH3-do-Ivb" secondAttribute="trailing" constant="16" id="qze-HD-DD8"/>
+                    <constraint firstItem="oH3-do-Ivb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uNJ-sU-ik0"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

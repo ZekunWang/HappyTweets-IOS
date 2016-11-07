@@ -19,6 +19,7 @@ class User: Object {
     static let FRIENDS_COUNT = "friends_count"
     static let FOLLOWERS_COUNT = "followers_count"
     static let FOLLOWING = "following"
+    static let STATUSES_COUNT = "statuses_count"
     
     static let userIdKey = "userIdKey"
     
@@ -28,9 +29,10 @@ class User: Object {
     dynamic var profileUrl: String = ""
     dynamic var friendsCount: Int = 0
     dynamic var followersCount: Int = 0
+    dynamic var statusesCount: Int = 0
     dynamic var following: Bool = false
-    dynamic var bannerUrl: String?
-    dynamic var tagline: String?
+    dynamic var bannerUrl: String = ""
+    dynamic var tagline: String = ""
     
     override static func primaryKey() -> String? {
         return "uidStr"
@@ -47,6 +49,7 @@ class User: Object {
         profileUrl = (dictionary[User.PROFILE_IMAGE_URL] as? String)!
         friendsCount = (dictionary[User.FRIENDS_COUNT] as? Int) ?? 0
         followersCount = (dictionary[User.FOLLOWERS_COUNT] as? Int) ?? 0
+        statusesCount = (dictionary[User.STATUSES_COUNT] as? Int) ?? 0
         following = (dictionary[User.FOLLOWING] as? Bool) ?? false
         
         if let taglineString = (dictionary[User.DESCRIPTION] as? String) {

@@ -15,7 +15,7 @@ class MenuItem: NSObject {
     var menuItemType: MenuItemType!
     
     init(icon: UIImage, label: String, menuItemType: MenuItemType) {
-        self.icon = icon.withRenderingMode(.alwaysTemplate)
+        self.icon = icon
         self.label = label
         self.menuItemType = menuItemType
     }

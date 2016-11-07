@@ -16,6 +16,7 @@ protocol TweetsViewControllerDelegate {
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellDelegate {
     
     let tweetCell = "TweetCell"
+    let profileViewControllerString = "ProfileViewController"
     
     @IBOutlet var tweetsTableView: UITableView!
     
@@ -30,6 +31,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var timelineType: TimelineType! {
         didSet {
+            print("timeline type: \(timelineType)")
             onRefresh()
         }
     }
@@ -99,6 +101,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.reloadRows(at: [indexPath], with: .none)
     }
     
+    func onProfileImageSelected(uidStr: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let profileViewController = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
+        profileViewController.userId = uidStr
+        present(profileViewController, animated: true, completion: nil)
+    }
+    
     func addPullToRefresh() {
         // Setup refresh control
         tableRefreshControl = UIRefreshControl()
@@ -125,12 +134,42 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         switch self.timelineType! {
         case .home:
             loadHomeTimeline(refreshing: refreshing, sinceId: sinceId, maxId: maxId)
+        case .mentions:
+            loadMentionsTimeline(refreshing: refreshing, sinceId: sinceId, maxId: maxId)
         default: break
         }
     }
     
     func loadHomeTimeline(refreshing: Bool, sinceId: Int64?, maxId: Int64?) {
         twitterClient?.homeTimeline(refreshing: refreshing, sinceId: sinceId, maxId: maxId, success: { (tweets: [Tweet]) in
+            if refreshing {
+                self.tweets = tweets
+            } else {
+                self.tweets.append(contentsOf: tweets)
+            }
+            
+            self.tweetsTableView.reloadData()
+            print("tweets count: \(self.tweets.count)")
+            
+            // Stop regreshing sign
+            self.tableRefreshControl?.endRefreshing()
+            // Update flag
+            self.isMoreDataLoading = false
+            // Stop the loading indicator
+            self.loadingMoreView!.stopAnimating()
+            }, failure: { (error: Error) in
+                print(error.localizedDescription)
+                // Stop regreshing sign
+                self.tableRefreshControl?.endRefreshing()
+                // Update flag
+                self.isMoreDataLoading = false
+                // Stop the loading indicator
+                self.loadingMoreView!.stopAnimating()
+        })
+    }
+    
+    func loadMentionsTimeline(refreshing: Bool, sinceId: Int64?, maxId: Int64?) {
+        twitterClient?.mentionsTimeline(refreshing: refreshing, sinceId: sinceId, maxId: maxId, success: { (tweets: [Tweet]) in
             if refreshing {
                 self.tweets = tweets
             } else {

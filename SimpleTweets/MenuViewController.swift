@@ -12,6 +12,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     let menuItemCellString = "MenuItemCell"
     let homeNavigationControllerString = "HomeNavigationController"
+    let composeViewControllerString = "ComposeViewController"
+    let profileViewControllerString = "ProfileViewController"
+    let mentionsNavigationControllerString = "MentionsNavigationController"
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var screennameLabel: UILabel!
@@ -19,6 +22,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var tableView: UITableView!
     
     private var homeTimeline: UIViewController!
+    private var mentionsTimeline: UIViewController!
+    private var profile: ProfileViewController!
     private var selectedIndexPath: IndexPath!
     var viewControllers: [UIViewController] = []
     
@@ -26,6 +31,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var user: User! {
         didSet {
+            print("user is \(self.user)")
             profileImageView.setImageWith(URL(string: user.profileUrl)!)
             nameLabel.text = user.name
             screennameLabel.text = "@\(user.screenname)"
@@ -33,11 +39,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     var menuItems: [MenuItem] = [
-        MenuItem(icon: UIImage(named: "home")!, label: "Home", menuItemType: .homeTimeline)
+        MenuItem(icon: UIImage(named: "home")!, label: "Home", menuItemType: .homeTimeline),
+        MenuItem(icon: UIImage(named: "notification")!, label: "Mentions", menuItemType: .mentionsTimeline),
+        MenuItem(icon: UIImage(named: "profile")!, label: "Me", menuItemType: .profile)
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0)
+        
         profileImageView.layer.cornerRadius = 10
         profileImageView.clipsToBounds = true
         
@@ -50,10 +60,30 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.homeTimeline = storyboard.instantiateViewController(withIdentifier: self.homeNavigationControllerString)
+        self.mentionsTimeline = storyboard.instantiateViewController(withIdentifier: self.mentionsNavigationControllerString)
+        self.profile = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
+        self.profile.userId = User.getCurrentUserId()
         viewControllers.append(homeTimeline)
+        viewControllers.append(mentionsTimeline)
+        viewControllers.append(profile)
         
-        self.user = User.getCurrentUser()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("user is \(User.getCurrentUserId())")
+        let currentUser = User.getCurrentUser()
+        if currentUser == nil {
+            TwitterClient.sharedInstance?.curretAccount(success: { (user: User) in
+                self.user = user
+            }, failure: { (error: Error) in
+                print(error.localizedDescription)
+            })
+        } else {
+            self.user = currentUser
+        }
+        selectMenuItem(indexPath: IndexPath(row: 0, section: 0))
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,6 +117,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         let targetCell = tableView.cellForRow(at: indexPath) as! MenuItemCell
         targetCell.iconImageView.tintColor = AppConstants.tweet_blue
         hamburgerViewController?.containerViewController = viewControllers[indexPath.row]
+        selectedIndexPath = indexPath
     }
     
     /*

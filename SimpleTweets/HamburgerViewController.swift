@@ -29,20 +29,33 @@ class HamburgerViewController: UIViewController {
     }
     
     var containerViewController: UIViewController! {
-        didSet {
+        didSet(oldContainerViewController) {
+            if oldContainerViewController != nil {
+                oldContainerViewController.willMove(toParentViewController: nil)
+                oldContainerViewController.view.removeFromSuperview()
+                oldContainerViewController.didMove(toParentViewController: nil)
+            }
+            
+            containerViewController.willMove(toParentViewController: self)
             containerView.addSubview(containerViewController.view)
+            containerViewController.didMove(toParentViewController: self)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        containerOpenedLeftMargin = menuView.bounds.width
-        print(" opened margin : \(menuView.bounds.width)")
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.menuViewController = storyboard.instantiateViewController(withIdentifier: self.menuViewControllerString) as! MenuViewController
         self.menuViewController.hamburgerViewController = self
+        
+        // status bar
+        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        containerOpenedLeftMargin = menuView.bounds.width
     }
     
     @IBAction func onContainerPanned(_ sender: UIPanGestureRecognizer) {
@@ -69,8 +82,8 @@ class HamburgerViewController: UIViewController {
     }
     
     func openMenu() {
-        UIView.animate(withDuration: 0.4) {
-            self.containerViewLeadingConstraint.constant = CGFloat(self.menuView.bounds.width)
+        UIView.animate(withDuration: 0.3) {
+            self.containerViewLeadingConstraint.constant = CGFloat(self.containerOpenedLeftMargin)
             self.containerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.94)
             self.view.layoutIfNeeded()
         }
@@ -78,7 +91,7 @@ class HamburgerViewController: UIViewController {
     }
     
     func closeMenu() {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             self.containerViewLeadingConstraint.constant = CGFloat(0)
             self.containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.view.layoutIfNeeded()
