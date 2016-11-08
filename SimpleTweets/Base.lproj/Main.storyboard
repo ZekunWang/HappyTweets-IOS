@@ -80,7 +80,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zO4-8x-K9j" id="evp-rg-rzS">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -96,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJP-C4-nUx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="118" y="1761"/>
+            <point key="canvasLocation" x="961" y="1761"/>
         </scene>
         <!--Hamburger View Controller-->
         <scene sceneID="ibD-ji-qWV">
@@ -268,7 +268,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lOd-DM-oox">
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mqu-6D-tak"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mqu-6D-tak"/>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVN-mZ-oTg">
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zekunwang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkE-aU-VdT">
@@ -292,48 +292,15 @@
                                             <constraint firstItem="Ge1-Nc-kai" firstAttribute="centerX" secondItem="uVN-mZ-oTg" secondAttribute="centerX" id="vZe-0i-FEE"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="85V-a9-bBX">
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="YmZ-QT-0wN"/>
-                                            <constraint firstAttribute="width" constant="25" id="s1v-ov-6dj"/>
-                                        </constraints>
-                                        <state key="normal" title="Button" image="back_arrow"/>
-                                        <connections>
-                                            <action selector="onBack:" destination="tQC-u7-Qz4" eventType="touchUpInside" id="eHV-gd-xsQ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="peP-j9-1wa">
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="V3L-yc-Rj3"/>
-                                            <constraint firstAttribute="width" constant="25" id="sQS-hR-n8F"/>
-                                        </constraints>
-                                        <state key="normal" title="Button" image="compose"/>
-                                        <connections>
-                                            <action selector="onCompuse:" destination="tQC-u7-Qz4" eventType="touchUpInside" id="eiq-Ee-OND"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55n-SS-ETU">
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="ozV-kf-bZ7"/>
-                                            <constraint firstAttribute="height" constant="25" id="x2g-Ir-1QH"/>
-                                        </constraints>
-                                        <state key="normal" title="Button" image="search"/>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="peP-j9-1wa" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="top" constant="26" id="4LB-EQ-ei0"/>
                                     <constraint firstAttribute="trailing" secondItem="mqu-6D-tak" secondAttribute="trailing" id="DqO-Yn-Cvd"/>
                                     <constraint firstItem="mqu-6D-tak" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="top" id="I99-CJ-Yi5"/>
-                                    <constraint firstItem="peP-j9-1wa" firstAttribute="centerY" secondItem="55n-SS-ETU" secondAttribute="centerY" id="KWa-GF-6cS"/>
-                                    <constraint firstItem="uVN-mZ-oTg" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="top" constant="200" id="RLx-wM-oeJ"/>
+                                    <constraint firstItem="uVN-mZ-oTg" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="top" constant="194" id="RLx-wM-oeJ"/>
                                     <constraint firstAttribute="height" constant="107" id="UDC-d4-VLs"/>
-                                    <constraint firstItem="85V-a9-bBX" firstAttribute="leading" secondItem="lOd-DM-oox" secondAttribute="leading" constant="8" id="URI-Cw-OcM"/>
                                     <constraint firstItem="uVN-mZ-oTg" firstAttribute="centerX" secondItem="lOd-DM-oox" secondAttribute="centerX" id="cl7-YD-xND"/>
-                                    <constraint firstAttribute="bottom" secondItem="mqu-6D-tak" secondAttribute="bottom" constant="6" id="d2c-oK-Gmz"/>
-                                    <constraint firstItem="peP-j9-1wa" firstAttribute="leading" secondItem="55n-SS-ETU" secondAttribute="trailing" constant="20" id="fYM-0u-md6"/>
-                                    <constraint firstItem="peP-j9-1wa" firstAttribute="centerY" secondItem="85V-a9-bBX" secondAttribute="centerY" id="i9u-CL-Amw"/>
+                                    <constraint firstAttribute="bottom" secondItem="mqu-6D-tak" secondAttribute="bottom" id="d2c-oK-Gmz"/>
                                     <constraint firstItem="mqu-6D-tak" firstAttribute="leading" secondItem="lOd-DM-oox" secondAttribute="leading" id="iir-dK-eqN"/>
-                                    <constraint firstAttribute="trailing" secondItem="peP-j9-1wa" secondAttribute="trailing" constant="20" id="laz-kZ-dLl"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ntX-5c-i39">
@@ -381,7 +348,6 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="tag-8F-Exc" firstAttribute="leading" secondItem="sr9-4T-AHj" secondAttribute="leading" constant="8" id="2t7-I4-Dxl"/>
                                         <constraint firstItem="lr9-5O-rHa" firstAttribute="top" secondItem="tag-8F-Exc" secondAttribute="bottom" constant="8" id="3rC-VI-MEg"/>
@@ -440,7 +406,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ZMt-K4-Mh5" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="bottom" constant="35" id="3Pb-4R-s6o"/>
+                            <constraint firstItem="ZMt-K4-Mh5" firstAttribute="top" secondItem="lOd-DM-oox" secondAttribute="bottom" constant="36" id="3Pb-4R-s6o"/>
                             <constraint firstItem="ntX-5c-i39" firstAttribute="top" secondItem="rYO-NX-eZg" secondAttribute="top" id="4lE-sB-v0V"/>
                             <constraint firstAttribute="trailing" secondItem="ZMt-K4-Mh5" secondAttribute="trailing" id="8BV-IS-VHa"/>
                             <constraint firstAttribute="trailing" secondItem="ntX-5c-i39" secondAttribute="trailing" id="O7D-Bs-19o"/>
@@ -454,9 +420,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ezV-Rh-DcW"/>
                     <connections>
-                        <outlet property="backButton" destination="85V-a9-bBX" id="4Ht-zF-Fpw"/>
                         <outlet property="bannerImageView" destination="mqu-6D-tak" id="IC9-P6-QYw"/>
-                        <outlet property="composeButton" destination="peP-j9-1wa" id="ogq-Vz-Xbh"/>
                         <outlet property="followersCount" destination="0dS-g0-xgd" id="5GB-40-wYg"/>
                         <outlet property="followingCountLabel" destination="lr9-5O-rHa" id="SJ3-JE-mCP"/>
                         <outlet property="headerInfoView" destination="uVN-mZ-oTg" id="gvH-3a-x3Y"/>
@@ -467,7 +431,6 @@
                         <outlet property="profileImageView" destination="zEz-vP-VE9" id="GkD-Ap-xrW"/>
                         <outlet property="profileView" destination="sr9-4T-AHj" id="eP3-jZ-LEA"/>
                         <outlet property="screennameLabel" destination="idh-qw-rdT" id="IPa-f0-5l5"/>
-                        <outlet property="searchButton" destination="55n-SS-ETU" id="YLV-VZ-xL0"/>
                         <outlet property="segmentedView" destination="ZMt-K4-Mh5" id="yU0-RU-1GK"/>
                         <outlet property="tableView" destination="ntX-5c-i39" id="oXI-ZS-WrQ"/>
                         <outlet property="taglineLabel" destination="tag-8F-Exc" id="eXM-tQ-sNs"/>
@@ -475,7 +438,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i34-mD-DT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2780" y="880.20989505247383"/>
+            <point key="canvasLocation" x="2769" y="879"/>
         </scene>
         <!--Title-->
         <scene sceneID="AhK-2a-xhs">
@@ -718,7 +681,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsH-3S-Ye0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="961" y="1761"/>
+            <point key="canvasLocation" x="1900" y="1761"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="KBf-Di-gaQ">
@@ -895,7 +858,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v1t-z5-c8L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1900" y="1761"/>
+            <point key="canvasLocation" x="2839.1999999999998" y="1760.8695652173915"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="S1F-J3-50A">
@@ -933,20 +896,36 @@
             </objects>
             <point key="canvasLocation" x="1900" y="123"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Kn4-45-Jhb">
+            <objects>
+                <navigationController storyboardIdentifier="ProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="z5W-Hb-Rmj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ziv-Jk-cqB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tQC-u7-Qz4" kind="relationship" relationship="rootViewController" id="rw5-eh-IrK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YGo-5G-Ikn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2770" y="123"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Twitter_Logo_White_On_Blue" width="400" height="400"/>
         <image name="arrow-down" width="48" height="48"/>
-        <image name="back_arrow" width="22" height="41"/>
         <image name="camera" width="208" height="165"/>
         <image name="cancel" width="81" height="81"/>
-        <image name="compose" width="30" height="32"/>
         <image name="gif" width="199" height="132"/>
         <image name="heart" width="48" height="42"/>
         <image name="lists" width="210" height="168"/>
         <image name="location" width="129" height="194"/>
         <image name="reply" width="48" height="34"/>
         <image name="retweet" width="48" height="29"/>
-        <image name="search" width="32" height="31"/>
     </resources>
 </document>

@@ -11,6 +11,7 @@ import RealmSwift
 
 protocol TweetsViewControllerDelegate {
     func onTweetSelected(indexPath: IndexPath)
+    func onProfileImageSelected(uidStr: String)
 }
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellDelegate {
@@ -102,10 +103,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func onProfileImageSelected(uidStr: String) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileViewController = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
-        profileViewController.userId = uidStr
-        present(profileViewController, animated: true, completion: nil)
+        delegate?.onProfileImageSelected(uidStr: uidStr)
     }
     
     func addPullToRefresh() {

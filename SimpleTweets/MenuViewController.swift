@@ -13,7 +13,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     let menuItemCellString = "MenuItemCell"
     let homeNavigationControllerString = "HomeNavigationController"
     let composeViewControllerString = "ComposeViewController"
-    let profileViewControllerString = "ProfileViewController"
+    let profileNavigationControllerString = "ProfileNavigationController"
     let mentionsNavigationControllerString = "MentionsNavigationController"
     
     @IBOutlet var nameLabel: UILabel!
@@ -23,7 +23,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private var homeTimeline: UIViewController!
     private var mentionsTimeline: UIViewController!
-    private var profile: ProfileViewController!
+    private var profile: UIViewController!
     private var selectedIndexPath: IndexPath!
     var viewControllers: [UIViewController] = []
     
@@ -41,7 +41,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     var menuItems: [MenuItem] = [
         MenuItem(icon: UIImage(named: "home")!, label: "Home", menuItemType: .homeTimeline),
         MenuItem(icon: UIImage(named: "notification")!, label: "Mentions", menuItemType: .mentionsTimeline),
-        MenuItem(icon: UIImage(named: "profile")!, label: "Me", menuItemType: .profile)
+        MenuItem(icon: UIImage(named: "profile")!, label: "Me", menuItemType: .profile),
+        MenuItem(icon: UIImage(named: "logout")!, label: "Logout", menuItemType: .profile)
     ]
     
     override func viewDidLoad() {
@@ -61,8 +62,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.homeTimeline = storyboard.instantiateViewController(withIdentifier: self.homeNavigationControllerString)
         self.mentionsTimeline = storyboard.instantiateViewController(withIdentifier: self.mentionsNavigationControllerString)
-        self.profile = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
-        self.profile.userId = User.getCurrentUserId()
+        self.profile = storyboard.instantiateViewController(withIdentifier: self.profileNavigationControllerString)
         viewControllers.append(homeTimeline)
         viewControllers.append(mentionsTimeline)
         viewControllers.append(profile)
@@ -113,6 +113,12 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = tableView.cellForRow(at: i) as! MenuItemCell
             cell.iconImageView.tintColor = AppConstants.tweet_dark_gray
         }
+        
+        if indexPath.row == menuItems.count - 1 {
+            TwitterClient.sharedInstance?.logout()
+            return
+        }
+        
         print("row: \(indexPath.row) section: \(indexPath.section)")
         let targetCell = tableView.cellForRow(at: indexPath) as! MenuItemCell
         targetCell.iconImageView.tintColor = AppConstants.tweet_blue

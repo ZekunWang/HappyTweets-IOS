@@ -43,11 +43,23 @@ The following **additional** features are implemented:
 - [x] Format retweet count and favorite count in table cell and tweet detail page
 - [x] Use Realm to store data locally
 - [x] Show image in tweet cells and detail page, need to make detail page scrollable
-- [x] Implement scroll effects in profile page like Twitter app
+- [x] Customize hamburger menu and animation of container view
+- [x] Implement reusable tweets table view by setting enum view type
+- [x] Implement profile page like the Twitter app
+    - [x] Scroll table view will resize banner image with minimum height
+    - [x] Scroll table view will scale profile image with minimum scale rate
+    - [x] Profile image is above banner image at scale up and behind banner image at minimum scale
+    - [x] Banner image will blur at minimum height
+    - [x] Scroll up to show user name and tweet counts above blurred banner image
+    - [x] Able to navigate between user, media and favorites timeline with segmented control
+    - [x] Add transparent navigation bar and click compose icon to compose new tweet
+    - [x] Click item in user, media and favorites timeline to view tweet detail
+    - [x] Click profile image in user, media and favorites timeline to view user profile (not the current profile)
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-  1. Pass data among view controllers and react to changes
+1. Pass data among view controllers and react to changes
+2. Best practice to manipulate navigation bar when jump between view controllers
 
 
 ## Video Walkthrough
@@ -66,13 +78,13 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [Zekun Wang]
+    Copyright [2016] [Zekun Wang]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,

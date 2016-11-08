@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellDelegate {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate {
     
     let tweetCell = "TweetCell"
     let mediumCell = "MediumCell"
     let composeViewControllerString = "ComposeViewController"
     let profileViewControllerString = "ProfileViewController"
+    let tweetDetailViewControllerString = "TweetDetailViewController"
     let minHeaderHeight: CGFloat = 40
-    let minDistance: CGFloat = 30
+    let minDistance: CGFloat = 20
 
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
@@ -26,9 +27,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var bannerImageView: UIImageView!
     
-    @IBOutlet var backButton: UIButton!
-    @IBOutlet var composeButton: UIButton!
-    @IBOutlet var searchButton: UIButton!
     @IBOutlet var headerInfoView: UIView!
     @IBOutlet var headerNameLabel: UILabel!
     @IBOutlet var headerStatusesCountLabel: UILabel!
@@ -38,6 +36,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var profileView: UIView!
     @IBOutlet var segmentedView: UIView!
     
+    var wasTintedColor: UIColor = UIColor.blue
+    var wasTransparent: Bool = false
+    var composeButton: UIButton!
+    var searchButton: UIButton!
     var isMoreDataLoading = true
     var loadingMoreView:InfiniteScrollActivityView?
     var twitterClient: TwitterClient!
@@ -51,12 +53,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             if user == nil {
                 return
             }
-            //bannerImageView.setImageWith(URL(string: user.bannerUrl)!, placeholderImage: #imageLiteral(resourceName: "default-placeholder"))
-            print("bannerUrl; \(user.bannerUrl)")
+            if user.bannerUrl != "" {
+                bannerImageView.setImageWith(URL(string: user.bannerUrl)!, placeholderImage: #imageLiteral(resourceName: "default-placeholder"))
+            } else {
+                bannerImageView.image = #imageLiteral(resourceName: "default-placeholder")
+            }
             profileImageView.setImageWith(URL(string: user.profileUrl)!)
             nameLabel.text = user.name
             screennameLabel.text = "@\(user.screenname)"
             taglineLabel.text = user.tagline
+            if taglineLabel.text == "" {
+                taglineLabel.text = " "
+            }
             followersCount.text = Helper.formatNumber(number: NSNumber(value: user.followersCount))
             followingCountLabel.text = Helper.formatNumber(number: NSNumber(value: user.friendsCount))
             
@@ -90,42 +98,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         // status bar
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        setupNavigationBar()
+        
+        if userId == nil {
+            userId = User.getCurrentUserId()
+        }
         user = User.findUserById(uid: self.userId!)
         onReloadTableView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // Button
-        let backImageView = UIImage(named: "back_arrow")?.withRenderingMode(.alwaysTemplate)
-        let searchImageView = UIImage(named: "search")?.withRenderingMode(.alwaysTemplate)
-        let composeImageView = UIImage(named: "compose")?.withRenderingMode(.alwaysTemplate)
         
-        backButton.setImage(backImageView, for: .normal)
-        searchButton.setImage(searchImageView, for: .normal)
-        composeButton.setImage(composeImageView, for: .normal)
-        
-        backButton.tintColor = UIColor.white
-        searchButton.tintColor = UIColor.white
-        composeButton.tintColor = UIColor.white
-        
-        if userId == User.getCurrentUserId() {
-            backButton.isHidden = true
-        } else {
-            backButton.isHidden = false
-        }
         
         // Add blur effect
-        let headerImageView = UIImageView(frame: headerView.bounds)
-        headerImageView.setImageWith(URL(string: user.bannerUrl)!)
-        headerImageView.contentMode = UIViewContentMode.scaleAspectFill
-        headerView.insertSubview(headerImageView, belowSubview:  headerInfoView)
-        
         let lightBlurEffect = UIBlurEffect(style: .light)
         blurView = UIVisualEffectView(effect: lightBlurEffect)
         blurView.frame = bannerImageView.frame
         blurView.alpha = 0
-        headerView.insertSubview(blurView, belowSubview: headerInfoView)
+        bannerImageView.addSubview(blurView)
         
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
@@ -141,11 +133,54 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Set segmentedView position according to changing tagline
         let profileViewHeight = followersCount.frame.maxY + segmentedView.frame.height
-        print("profileView   Height: \(profileViewHeight)")
         profileView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: profileViewHeight)
-        print("origin before: x:\(segmentedView.frame.origin.x) y: \(segmentedView.frame.origin.y)")
+        print("defined profileView height: \(profileView.frame.height)")
         segmentedView.frame.origin = CGPoint(x: 0, y: profileViewHeight - segmentedView.frame.height + headerView.frame.height)
-        print("origin now   : x:\(segmentedView.frame.origin.x) y: \(segmentedView.frame.origin.y)")
+        print("defined segmented   height: \(segmentedView.frame.height)")
+        segmentedView.isHidden = false
+    }
+    
+    func setupNavigationBar() {
+        print("isTranslucent  : \(self.navigationController?.navigationBar.isTranslucent)")
+        print("was transparent: \(wasTransparent)")
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.isTranslucent = true
+        print("isTranslucent now : \(self.navigationController?.navigationBar.isTranslucent)")
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.titleView = nil
+        
+        composeButton = UIButton(type: .custom)
+        composeButton.contentMode = UIViewContentMode.scaleAspectFit
+        composeButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        let composeImageView = UIImage(named: "compose")?.withRenderingMode(.alwaysTemplate)
+        composeButton.setImage(composeImageView, for: .normal)
+        composeButton.addTarget(self, action: #selector(onComposeTouchUp), for: .touchUpInside)
+        let composeItem = UIBarButtonItem(customView: composeButton)
+        
+        searchButton = UIButton(type: .custom)
+        searchButton.contentMode = UIViewContentMode.scaleAspectFit
+        searchButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        let searchImageView = UIImage(named: "search")?.withRenderingMode(.alwaysTemplate)
+        searchButton.setImage(searchImageView, for: .normal)
+        let searchItem = UIBarButtonItem(customView: searchButton)
+        
+        searchButton.tintColor = UIColor.white
+        composeButton.tintColor = UIColor.white
+        //        hamburgerButton = UIButton(type: .custom)
+        //        hamburgerButton.contentMode = UIViewContentMode.scaleAspectFit
+        //        hamburgerButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        //        hamburgerButton.setImage(UIImage(named: "hamburger"), for: .normal)
+        //        hamburgerButton.addTarget(self, action: #selector(onHamburgerTouchUp), for: .touchUpInside)
+        //        let hamburgerItem = UIBarButtonItem(customView: hamburgerButton)
+        
+        let spaceItem = UIBarButtonItem(customView: UIButton(frame: CGRect(x: 0, y: 0, width: 2, height: 30)))
+        let wideSpaceItem = UIBarButtonItem(customView: UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 30)))
+        
+        navigationItem.rightBarButtonItems = [composeItem, spaceItem, searchItem]
+        //navigationItem.leftBarButtonItems = [wideSpaceItem, spaceItem, wideSpaceItem]
     }
     
     // MARK - TweetDetailViewControllerDelegate, TweetCellDelegate
@@ -155,10 +190,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func onProfileImageSelected(uidStr: String) {
+        if uidStr == userId {
+            return
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let profileViewController = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
         profileViewController.userId = uidStr
-        present(profileViewController, animated: true, completion: nil)
+        profileViewController.wasTransparent = (self.navigationController?.navigationBar.isTranslucent)!
+        profileViewController.wasTintedColor = (self.navigationController?.navigationBar.tintColor)!
+        self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @IBAction func onSwitchSegmentedControl(_ sender: UISegmentedControl) {
@@ -306,7 +347,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             headerInfoView.frame.origin = CGPoint(x: headerInfoView.frame.origin.x, y: max(headerInfoOriginHeight, minHeaderHeight + minDistance))
             
             // Blur
-            blurView.alpha = min(1, (offset - headerInfoOriginHeight) / minDistance)
+            blurView.alpha = min(1, (offset - headerInfoOriginHeight) / minHeaderHeight)
             
             // Profile image
             let avatarScaleFactor = min(offset, minHeaderHeight) / profileImageView.bounds.height / 1.4
@@ -326,9 +367,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileImageView.layer.transform = avatarTransform
         
         // Update segmented control position
-        let segmentHeightDiff = profileView.frame.height - segmentedView.frame.height - offset
-        let segmentTransform = CATransform3DTranslate(CATransform3DIdentity, 0, max(segmentHeightDiff, -minHeaderHeight), 0)
-        segmentedView.layer.transform = segmentTransform
+        let segmentHeightDiff = profileView.frame.height - segmentedView.frame.height + headerView.frame.height - max(0, offset)
+        segmentedView.frame.origin = CGPoint(x: 0, y: max(segmentHeightDiff, headerView.frame.maxY))
         
         // Table view scroll indicator
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(segmentedView.frame.maxY, 0, 0, 0)
@@ -346,12 +386,30 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: self.tweetCell, for: indexPath) as! TweetCell
             cell.tweet = tweets[indexPath.row]
+            cell.delegate = self
+            cell.indexPath = indexPath
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        onTweetSelected(indexPath: indexPath)
         self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func onTweetSelected(indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tweetDetailViewController = storyboard.instantiateViewController(withIdentifier: self.tweetDetailViewControllerString) as! TweetDetailViewController
+        
+        // Pass the selected object to the new view controller.
+        //tweetDetailViewController.timelineViewController = self
+        tweetDetailViewController.delegate = self
+        tweetDetailViewController.indexPath = indexPath
+        tweetDetailViewController.tweet = tweets[indexPath.row]
+        tweetDetailViewController.wasTransparent = (self.navigationController?.navigationBar.isTranslucent)!
+        tweetDetailViewController.wasTintedColor = (self.navigationController?.navigationBar.tintColor)!
+        
+        self.navigationController?.pushViewController(tweetDetailViewController, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

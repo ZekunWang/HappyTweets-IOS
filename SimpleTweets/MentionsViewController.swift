@@ -32,8 +32,6 @@ class MentionsViewController: UIViewController, ComposeViewControllerDelegate, T
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar()
-        
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         tweetsViewController = mainStoryboard.instantiateViewController(withIdentifier: self.tweetsViewControllerString) as! TweetsViewController
         //tweetsViewController.timelineViewController = self
@@ -45,12 +43,21 @@ class MentionsViewController: UIViewController, ComposeViewControllerDelegate, T
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setupNavigationBar()
+        
         if tweetsViewController.timelineType != nil {
             tweetsViewController.onRefresh()
         }
     }
     
     func setupNavigationBar() {
+        
+        //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.isTranslucent = false
+        //        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         let imageTitle = UIImage(named: "twitter_logo_blue")
         let logoImageView = UIImageView(image: imageTitle)
         logoImageView.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
@@ -81,7 +88,6 @@ class MentionsViewController: UIViewController, ComposeViewControllerDelegate, T
         let wideSpaceItem = UIBarButtonItem(customView: UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 30)))
         
         navigationItem.rightBarButtonItems = [composeItem, spaceItem, searchItem]
-        navigationItem.leftBarButtonItems = [wideSpaceItem, spaceItem, wideSpaceItem]
     }
     
     func onHamburgerTouchUp() {
@@ -104,6 +110,15 @@ class MentionsViewController: UIViewController, ComposeViewControllerDelegate, T
     // MARK - TweetDetailViewController
     func onTweetUpdated(tweet: Tweet, indexPath: IndexPath) {
         tweetsViewController.onTweetUpdated(tweet: tweet, indexPath: indexPath)
+    }
+    
+    func onProfileImageSelected(uidStr: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let profileViewController = storyboard.instantiateViewController(withIdentifier: self.profileViewControllerString) as! ProfileViewController
+        profileViewController.userId = uidStr
+        profileViewController.wasTransparent = (self.navigationController?.navigationBar.isTranslucent)!
+        profileViewController.wasTintedColor = (self.navigationController?.navigationBar.tintColor)!
+        self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     // MARK - TweetsViewControllerDelegate

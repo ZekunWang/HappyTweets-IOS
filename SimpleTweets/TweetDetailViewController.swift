@@ -40,6 +40,8 @@ class TweetDetailViewController: UIViewController {
     var composeButton: UIButton!
     var searchButton: UIButton!
     
+    var wasTintedColor: UIColor = UIColor.blue
+    var wasTransparent: Bool = false
     var delegate: TweetDetailViewControllerDelegate!
     //var timelineViewController: TweetsViewController!
     var indexPath: IndexPath!
@@ -52,8 +54,6 @@ class TweetDetailViewController: UIViewController {
         profileImageView.clipsToBounds = true
         mediaImageView.layer.cornerRadius = 10
         profileImageView.clipsToBounds = true
-        
-        setupNavigationBar()
         
         let searchTweet = Tweet.findTweetById(tid: tweet.tidStr)
         print("      tweet: \(tweet.tidStr)")
@@ -114,7 +114,19 @@ class TweetDetailViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationBar()
+    }
+    
     func setupNavigationBar() {
+        //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = AppConstants.tweet_blue
+        //        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         navigationItem.title = "Tweet"
         
         composeButton = UIButton(type: .custom)
@@ -199,6 +211,13 @@ class TweetDetailViewController: UIViewController {
                     return
             })
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("isTranslucent  : \(self.navigationController?.navigationBar.isTranslucent)")
+        print("was transparent: \(wasTransparent)")
+        self.navigationController?.navigationBar.isTranslucent = wasTransparent
+        self.navigationController?.navigationBar.tintColor = wasTintedColor
     }
     
     /*
