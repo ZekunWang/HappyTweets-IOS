@@ -80,7 +80,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zO4-8x-K9j" id="evp-rg-rzS">
-                                            <frame key="frameInset" width="375" height="44"/>
+                                            <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -325,7 +325,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tagline" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tag-8F-Exc">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="tagline" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tag-8F-Exc">
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -347,6 +347,34 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h8o-PX-oL8">
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Okr-AC-iEl">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="H5E-e9-URP"/>
+                                                        <constraint firstAttribute="width" constant="22" id="Onw-bS-FWf"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6m-Gb-67Q">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstItem="Okr-AC-iEl" firstAttribute="centerY" secondItem="h8o-PX-oL8" secondAttribute="centerY" id="9DL-xf-Ssg"/>
+                                                <constraint firstAttribute="trailing" secondItem="f6m-Gb-67Q" secondAttribute="trailing" constant="12" id="S8U-T1-nBD"/>
+                                                <constraint firstItem="f6m-Gb-67Q" firstAttribute="leading" secondItem="Okr-AC-iEl" secondAttribute="trailing" constant="8" id="T0B-DV-lbU"/>
+                                                <constraint firstItem="f6m-Gb-67Q" firstAttribute="centerY" secondItem="h8o-PX-oL8" secondAttribute="centerY" id="hlK-1E-pey"/>
+                                                <constraint firstAttribute="height" constant="30" id="nMC-PZ-SjT"/>
+                                                <constraint firstItem="Okr-AC-iEl" firstAttribute="leading" secondItem="h8o-PX-oL8" secondAttribute="leading" constant="12" id="xlT-2W-OJb"/>
+                                            </constraints>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="IzD-bG-Txy" appends="YES" id="T2X-yC-ENN"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="tag-8F-Exc" firstAttribute="leading" secondItem="sr9-4T-AHj" secondAttribute="leading" constant="8" id="2t7-I4-Dxl"/>
@@ -359,7 +387,9 @@
                                         <constraint firstItem="Lkx-Wh-pHO" firstAttribute="centerY" secondItem="0dS-g0-xgd" secondAttribute="centerY" id="Z9Q-p1-yR1"/>
                                         <constraint firstAttribute="trailing" secondItem="tag-8F-Exc" secondAttribute="trailing" id="ZS1-T4-80w"/>
                                         <constraint firstItem="01C-aN-fhh" firstAttribute="leading" secondItem="sr9-4T-AHj" secondAttribute="leading" constant="8" id="c16-o1-8Qf"/>
+                                        <constraint firstAttribute="trailing" secondItem="h8o-PX-oL8" secondAttribute="trailing" constant="8" id="fCl-7u-sWl"/>
                                         <constraint firstItem="8dK-i8-KfA" firstAttribute="leading" secondItem="lr9-5O-rHa" secondAttribute="trailing" constant="4" id="hIo-hA-YGb"/>
+                                        <constraint firstItem="h8o-PX-oL8" firstAttribute="top" secondItem="sr9-4T-AHj" secondAttribute="top" constant="8" id="is9-Ng-Vtf"/>
                                         <constraint firstItem="lr9-5O-rHa" firstAttribute="leading" secondItem="01C-aN-fhh" secondAttribute="leading" id="jiq-Dw-KNP"/>
                                         <constraint firstItem="tag-8F-Exc" firstAttribute="top" secondItem="idh-qw-rdT" secondAttribute="bottom" constant="8" id="u94-pB-aF5"/>
                                         <constraint firstItem="8dK-i8-KfA" firstAttribute="centerY" secondItem="lr9-5O-rHa" secondAttribute="centerY" id="wUZ-F8-KlQ"/>
@@ -381,6 +411,7 @@
                                             <segment title="Media"/>
                                             <segment title="Likes"/>
                                         </segments>
+                                        <color key="tintColor" red="0.0" green="0.61568627450980395" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onSwitchSegmentedControl:" destination="tQC-u7-Qz4" eventType="valueChanged" id="6Km-D4-xga"/>
                                         </connections>
@@ -421,6 +452,9 @@
                     <navigationItem key="navigationItem" id="ezV-Rh-DcW"/>
                     <connections>
                         <outlet property="bannerImageView" destination="mqu-6D-tak" id="IC9-P6-QYw"/>
+                        <outlet property="followIcon" destination="Okr-AC-iEl" id="nHW-dB-tSE"/>
+                        <outlet property="followLabel" destination="f6m-Gb-67Q" id="7ha-JZ-CTg"/>
+                        <outlet property="followView" destination="h8o-PX-oL8" id="Vjx-cn-mKn"/>
                         <outlet property="followersCount" destination="0dS-g0-xgd" id="5GB-40-wYg"/>
                         <outlet property="followingCountLabel" destination="lr9-5O-rHa" id="SJ3-JE-mCP"/>
                         <outlet property="headerInfoView" destination="uVN-mZ-oTg" id="gvH-3a-x3Y"/>
@@ -434,11 +468,17 @@
                         <outlet property="segmentedView" destination="ZMt-K4-Mh5" id="yU0-RU-1GK"/>
                         <outlet property="tableView" destination="ntX-5c-i39" id="oXI-ZS-WrQ"/>
                         <outlet property="taglineLabel" destination="tag-8F-Exc" id="eXM-tQ-sNs"/>
+                        <outlet property="timelineSegmentedControl" destination="XpO-we-BVG" id="nGB-hn-gu8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i34-mD-DT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="IzD-bG-Txy">
+                    <connections>
+                        <action selector="onFollowChanged:" destination="tQC-u7-Qz4" id="SZx-Jr-KLH"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2769" y="879"/>
+            <point key="canvasLocation" x="2768.8000000000002" y="878.41079460269873"/>
         </scene>
         <!--Title-->
         <scene sceneID="AhK-2a-xhs">

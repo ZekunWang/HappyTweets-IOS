@@ -27,7 +27,7 @@ class AppConstants {
     static let unSetFollow = "1.1/friendships/destroy.json"
     
     // Colors
-    static let tweet_blue = UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0)
+    static let tweet_blue = UIColor(red:0.00, green:0.62, blue:0.96, alpha:1.0)
     static let tweet_light_gray = UIColor(red:0.80, green:0.84, blue:0.87, alpha:1.0)
     static let tweet_mid_gray = UIColor(red:0.67, green:0.72, blue:0.76, alpha:1.0)
     static let tweet_dark_gray = UIColor(red:0.38, green:0.46, blue:0.51, alpha:1.0)

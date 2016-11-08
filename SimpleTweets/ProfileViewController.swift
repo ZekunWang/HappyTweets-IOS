@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate {
     
@@ -24,6 +25,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var taglineLabel: UILabel!
     @IBOutlet var followingCountLabel: UILabel!
     @IBOutlet var followersCount: UILabel!
+    @IBOutlet var followView: UIView!
+    @IBOutlet var followIcon: UIImageView!
+    @IBOutlet var followLabel: UILabel!
     
     @IBOutlet var bannerImageView: UIImageView!
     
@@ -35,6 +39,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var tableView: UITableView!
     @IBOutlet var profileView: UIView!
     @IBOutlet var segmentedView: UIView!
+    @IBOutlet var timelineSegmentedControl: UISegmentedControl!
     
     var wasTintedColor: UIColor = UIColor.blue
     var wasTransparent: Bool = false
@@ -72,7 +77,27 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let formattedCount = Helper.formatNumber(number: NSNumber(value: user.statusesCount))
             headerStatusesCountLabel.text = "\(formattedCount) Tweets"
 
+            if userId == User.getCurrentUserId() {
+                followView.isHidden = true
+            } else {
+                followView.isHidden = false
+                user.following ? setFollowButton() : unSetFollowButton()
+            }
         }
+    }
+    
+    func setFollowButton() {
+        followView.layer.backgroundColor = AppConstants.tweet_blue.cgColor
+        followLabel.text = "Following"
+        followLabel.textColor = UIColor.white
+        followIcon.image = #imageLiteral(resourceName: "account_check")
+    }
+    
+    func unSetFollowButton() {
+        followView.layer.backgroundColor = UIColor.white.cgColor
+        followLabel.text = "Follow"
+        followLabel.textColor = AppConstants.tweet_blue
+        followIcon.image = #imageLiteral(resourceName: "account_add")
     }
     
     override func viewDidLoad() {
@@ -84,6 +109,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileImageView.layer.borderWidth = 4
         profileImageView.layer.borderColor = UIColor.white.cgColor
         
+        followView.layer.cornerRadius = 5
+        followView.clipsToBounds = true
+        followView.layer.borderWidth = 2
+        followView.layer.borderColor = AppConstants.tweet_blue.cgColor
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -92,6 +122,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         twitterClient = TwitterClient.sharedInstance
         self.tableView.register(UINib(nibName: self.tweetCell, bundle: nil), forCellReuseIdentifier: self.tweetCell)
         self.tableView.register(UINib(nibName: self.mediumCell, bundle: nil), forCellReuseIdentifier: self.mediumCell)
+        
+        timelineSegmentedControl.tintColor = AppConstants.tweet_blue
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,12 +163,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         tableView.contentInset = insets
         
+        initialzeHeaderView()
+    }
+    
+    func initialzeHeaderView() {
         // Set segmentedView position according to changing tagline
         let profileViewHeight = followersCount.frame.maxY + segmentedView.frame.height
+        print("count  label max y: \(followersCount.frame.maxY)")
+        print("profileview height: \(profileViewHeight)")
         profileView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: profileViewHeight)
-        print("defined profileView height: \(profileView.frame.height)")
+//        print("defined profileView height: \(profileView.frame.height)")
         segmentedView.frame.origin = CGPoint(x: 0, y: profileViewHeight - segmentedView.frame.height + headerView.frame.height)
-        print("defined segmented   height: \(segmentedView.frame.height)")
+//        print("defined segmented   height: \(segmentedView.frame.height)")
         segmentedView.isHidden = false
     }
     
@@ -200,6 +238,34 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileViewController.wasTransparent = (self.navigationController?.navigationBar.isTranslucent)!
         profileViewController.wasTintedColor = (self.navigationController?.navigationBar.tintColor)!
         self.navigationController?.pushViewController(profileViewController, animated: true)
+    }
+    
+    @IBAction func onFollowChanged(_ sender: UITapGestureRecognizer) {
+        user.following ? unSetFollow() : setFollow()
+    }
+    
+    func unSetFollow() {
+        TwitterClient.sharedInstance?.unSetFollow(user: self.user, success: { (user: User) in
+            let realm = try! Realm()
+            try! realm.write {
+                self.user.following = false
+            }
+            self.unSetFollowButton()
+            }, failure: { (error: Error) in
+                print(error.localizedDescription)
+        })
+    }
+    
+    func setFollow() {
+        TwitterClient.sharedInstance?.setFollow(user: self.user, success: { (user: User) in
+            let realm = try! Realm()
+            try! realm.write {
+                self.user.following = true
+            }
+            self.setFollowButton()
+        }, failure: { (error: Error) in
+                print(error.localizedDescription)
+        })
     }
     
     @IBAction func onSwitchSegmentedControl(_ sender: UISegmentedControl) {
